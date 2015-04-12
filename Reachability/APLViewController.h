@@ -47,6 +47,7 @@
 
 
 #import <UIKit/UIKit.h>
+@import CoreTelephony;
 
 @interface APLViewController : UIViewController
 

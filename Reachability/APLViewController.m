@@ -47,11 +47,13 @@
 
 #import "APLViewController.h"
 #import "Reachability.h"
+@import CoreTelephony;
 
 
 @interface APLViewController ()
 
 @property (nonatomic, weak) IBOutlet UILabel* summaryLabel;
+@property (weak, nonatomic) IBOutlet UILabel *cellularLabel;
 
 @property (nonatomic, weak) IBOutlet UITextField *remoteHostLabel;
 @property (nonatomic, weak) IBOutlet UIImageView *remoteHostImageView;
@@ -76,12 +78,22 @@
 
 - (void)viewDidLoad
 {
+    [super viewDidLoad];
     self.summaryLabel.hidden = YES;
+    self.cellularLabel.hidden = YES;
 
     /*
      Observe the kNetworkReachabilityChangedNotification. When that notification is posted, the method reachabilityChanged will be called.
      */
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(reachabilityChanged:) name:kReachabilityChangedNotification object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(reachabilityChanged:)
+                                                 name:kReachabilityChangedNotification
+                                               object:nil];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(cellularDidChange:)
+                                                 name:@"radioDidChange"
+                                               object:nil];
 
     //Change the host name here to change the server you want to monitor.
     NSString *remoteHostName = @"www.apple.com";
@@ -100,6 +112,7 @@
 	[self.wifiReachability startNotifier];
 	[self updateInterfaceWithReachability:self.wifiReachability];
     
+    [self cellularDidChange:nil];
 }
 
 
@@ -123,6 +136,8 @@
         BOOL connectionRequired = [reachability connectionRequired];
 
         self.summaryLabel.hidden = (netStatus != ReachableViaWWAN);
+        self.cellularLabel.hidden = (netStatus != ReachableViaWWAN);
+        
         NSString* baseLabelText = @"";
         
         if (connectionRequired)
@@ -190,6 +205,48 @@
 - (void)dealloc
 {
     [[NSNotificationCenter defaultCenter] removeObserver:self name:kReachabilityChangedNotification object:nil];
+}
+
+
+
+- (void)cellularDidChange:(NSNotification *)note {
+    NSString *radioTech = [SharedAppDelegate.telephonyNetworkInfo.currentRadioAccessTechnology copy];
+    NSString *fast = [self radioTechnologyIsFast:radioTech] ? @"fast" : @"slow";
+    NSLog(@"Radio Access Technology did change to %@ %@", fast, radioTech);
+    if (radioTech) {
+        self.cellularLabel.text = [NSString stringWithFormat:@"Radio Access Technology is %@ %@", fast, radioTech];
+    }
+    else {
+        self.cellularLabel.text = @"Not cellular network.";
+    }
+}
+
+- (BOOL)radioTechnologyIsFast:(NSString *)radioTech {
+    if ([radioTech isEqualToString:CTRadioAccessTechnologyGPRS]) { // 2G
+        return NO;
+    } else if ([radioTech isEqualToString:CTRadioAccessTechnologyEdge]) { // 2.5G
+        return NO;
+    } else if ([radioTech isEqualToString:CTRadioAccessTechnologyWCDMA]) { // 3G
+        return YES;
+    } else if ([radioTech isEqualToString:CTRadioAccessTechnologyHSDPA]) { // 3.5G
+        return YES;
+    } else if ([radioTech isEqualToString:CTRadioAccessTechnologyHSUPA]) {
+        return YES; // 3G
+    } else if ([radioTech isEqualToString:CTRadioAccessTechnologyCDMA1x]) { // 3G
+        return YES;
+    } else if ([radioTech isEqualToString:CTRadioAccessTechnologyCDMAEVDORev0]) { // 3G
+        return YES;
+    } else if ([radioTech isEqualToString:CTRadioAccessTechnologyCDMAEVDORevA]) { // 3G
+        return YES;
+    } else if ([radioTech isEqualToString:CTRadioAccessTechnologyCDMAEVDORevB]) { // 3G
+        return YES;
+    } else if ([radioTech isEqualToString:CTRadioAccessTechnologyeHRPD]) { // 3.5G
+        return YES;
+    } else if ([radioTech isEqualToString:CTRadioAccessTechnologyLTE]) { // 4G
+        return YES;
+    }
+    
+    return YES;
 }
 
 

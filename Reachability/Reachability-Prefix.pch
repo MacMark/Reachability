@@ -11,4 +11,14 @@
 #ifdef __OBJC__
     #import <UIKit/UIKit.h>
     #import <Foundation/Foundation.h>
+    #import "APLAppDelegate.h"
 #endif
+
+
+#ifndef __OPTIMIZE__
+#   define NSLog(fmt, ...) NSLog((@"%@ %s-%d " fmt), [[NSString stringWithUTF8String:__FILE__] lastPathComponent], __PRETTY_FUNCTION__, __LINE__, ##__VA_ARGS__)
+#else
+#   define NSLog(...)
+#endif
+
+#define SharedAppDelegate ((APLAppDelegate *)[[UIApplication sharedApplication] delegate])

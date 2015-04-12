@@ -17,8 +17,8 @@
                         <rect key="frame" x="0.0" y="64" width="320" height="504"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
-                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" misplaced="YES" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" minimumFontSize="14" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="280" translatesAutoresizingMaskIntoConstraints="NO" id="bby-T7-Piy">
-                                <rect key="frame" x="20" y="211" width="280" height="62"/>
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" minimumFontSize="14" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="280" translatesAutoresizingMaskIntoConstraints="NO" id="bby-T7-Piy">
+                                <rect key="frame" x="20" y="211" width="280" height="58"/>
                                 <string key="text">Cellular data network is available.
 Internet traffic will be routed through it.</string>
                                 <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
@@ -81,6 +81,12 @@ Internet traffic will be routed through it.</string>
                                 <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
                                 <textInputTraits key="textInputTraits"/>
                             </textField>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="CHz-MZ-vK5">
+                                <rect key="frame" x="23" y="287" width="280" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <constraints>
@@ -94,9 +100,11 @@ Internet traffic will be routed through it.</string>
                             <constraint firstItem="TIF-40-xoz" firstAttribute="top" secondItem="JU0-nd-qau" secondAttribute="bottom" constant="20" symbolic="YES" id="BPd-2T-uO8"/>
                             <constraint firstItem="w4G-Ov-Jas" firstAttribute="leading" secondItem="3" secondAttribute="leading" constant="20" id="BQI-GN-OmS"/>
                             <constraint firstItem="PT4-14-fe5" firstAttribute="top" secondItem="hkD-6n-uht" secondAttribute="bottom" constant="8" symbolic="YES" id="CBg-S1-CAG"/>
+                            <constraint firstItem="CHz-MZ-vK5" firstAttribute="centerX" secondItem="bby-T7-Piy" secondAttribute="centerX" constant="3" id="Fgh-BQ-dco"/>
                             <constraint firstItem="Kue-1g-TmZ" firstAttribute="leading" secondItem="TYc-jw-Edc" secondAttribute="leading" id="Hlg-x6-LcY"/>
                             <constraint firstItem="bby-T7-Piy" firstAttribute="leading" secondItem="3" secondAttribute="leading" constant="20" symbolic="YES" id="JZb-3R-sIV"/>
                             <constraint firstAttribute="trailing" secondItem="bcZ-hO-3f6" secondAttribute="trailing" constant="20" id="ND8-QD-5hE"/>
+                            <constraint firstItem="CHz-MZ-vK5" firstAttribute="width" secondItem="bby-T7-Piy" secondAttribute="width" id="NY4-Xd-v9b"/>
                             <constraint firstItem="bby-T7-Piy" firstAttribute="top" secondItem="PT4-14-fe5" secondAttribute="bottom" constant="8" symbolic="YES" id="RWq-U9-AY1"/>
                             <constraint firstItem="TYc-jw-Edc" firstAttribute="leading" secondItem="thm-ip-gCR" secondAttribute="trailing" constant="8" symbolic="YES" id="Rea-bl-U32"/>
                             <constraint firstItem="Kue-1g-TmZ" firstAttribute="leading" secondItem="bcZ-hO-3f6" secondAttribute="leading" id="Ryd-aa-IYw"/>
@@ -108,6 +116,7 @@ Internet traffic will be routed through it.</string>
                             <constraint firstItem="thm-ip-gCR" firstAttribute="leading" secondItem="3" secondAttribute="leading" constant="20" symbolic="YES" id="fgi-kH-KoI"/>
                             <constraint firstItem="hkD-6n-uht" firstAttribute="leading" secondItem="w4G-Ov-Jas" secondAttribute="leading" id="fm6-0O-Vwg"/>
                             <constraint firstItem="w4G-Ov-Jas" firstAttribute="top" secondItem="kwm-zB-HZ7" secondAttribute="bottom" constant="8" symbolic="YES" id="giG-z6-CIP"/>
+                            <constraint firstItem="CHz-MZ-vK5" firstAttribute="top" secondItem="bby-T7-Piy" secondAttribute="bottom" constant="18" id="hJh-zE-84o"/>
                             <constraint firstItem="Kue-1g-TmZ" firstAttribute="leading" secondItem="w4G-Ov-Jas" secondAttribute="trailing" constant="8" symbolic="YES" id="iQw-iA-eZs"/>
                             <constraint firstItem="TYc-jw-Edc" firstAttribute="top" secondItem="TIF-40-xoz" secondAttribute="bottom" constant="8" symbolic="YES" id="igi-sf-7pP"/>
                             <constraint firstItem="hkD-6n-uht" firstAttribute="top" secondItem="w4G-Ov-Jas" secondAttribute="bottom" constant="8" symbolic="YES" id="lGh-Av-ATx"/>
@@ -119,6 +128,7 @@ Internet traffic will be routed through it.</string>
                     </view>
                     <navigationItem key="navigationItem" title="Reachability" id="1rc-Aw-wqd"/>
                     <connections>
+                        <outlet property="cellularLabel" destination="CHz-MZ-vK5" id="Lre-4E-Umy"/>
                         <outlet property="internetConnectionImageView" destination="w4G-Ov-Jas" id="aiB-5j-6fQ"/>
                         <outlet property="internetConnectionStatusField" destination="Kue-1g-TmZ" id="0iJ-ej-ZJl"/>
                         <outlet property="localWiFiConnectionImageView" destination="PT4-14-fe5" id="rwq-fz-wfF"/>

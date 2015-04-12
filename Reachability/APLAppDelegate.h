@@ -46,9 +46,11 @@
  */
 
 #import <UIKit/UIKit.h>
+@import CoreTelephony;
 
 @interface APLAppDelegate : UIResponder <UIApplicationDelegate>
 
 @property (strong, nonatomic) UIWindow *window;
+@property (nonatomic, strong) CTTelephonyNetworkInfo *telephonyNetworkInfo;
 
 @end

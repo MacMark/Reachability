@@ -49,4 +49,32 @@
 
 @implementation APLAppDelegate
 
+- (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
+    
+    self.telephonyNetworkInfo = [[CTTelephonyNetworkInfo alloc] init];
+    NSLog(@"Initial cell connection: %@", self.telephonyNetworkInfo.currentRadioAccessTechnology);
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(radioAccessTechnologyDidChange) name:CTRadioAccessTechnologyDidChangeNotification object:nil];
+    
+    return YES;
+}
+
+- (void)radioAccessTechnologyDidChange {
+    NSLog(@"Radio Access Technology did change to: %@", self.telephonyNetworkInfo.currentRadioAccessTechnology);
+    
+    NSNotification *radioDidChangeNotification = [NSNotification notificationWithName:@"radioDidChange"
+                                                                               object:self
+                                                                             userInfo:nil];
+    
+    [[NSNotificationQueue defaultQueue] enqueueNotification:radioDidChangeNotification
+                                               postingStyle:NSPostASAP];
+    
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [[NSNotificationQueue defaultQueue] enqueueNotification:radioDidChangeNotification
+                                                   postingStyle:NSPostASAP
+                                                   coalesceMask:NSNotificationNoCoalescing
+                                                       forModes:nil];
+    });
+
+}
+
 @end
