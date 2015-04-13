@@ -216,9 +216,6 @@
     if (radioTech) {
         self.cellularLabel.text = [NSString stringWithFormat:@"Radio Access Technology is %@ %@", fast, radioTech];
     }
-    else {
-        self.cellularLabel.text = @"Not cellular network.";
-    }
 }
 
 - (BOOL)radioTechnologyIsFast:(NSString *)radioTech {
